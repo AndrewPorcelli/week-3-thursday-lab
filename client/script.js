@@ -104,6 +104,7 @@ const ohMy = () => {
       for (let i = 0; i < res.data.length; i++) {
         let b = document.createElement("p");
         b.textContent = res.data[i];
+        // have to do something with the data. Need to attach it to the body
         body.append(b);
       }
     })
@@ -165,9 +166,13 @@ document
 // CODE HERE
 
 function queryRequest() {
-  axios.get("http://localhost:3000/query-test?banana=fruit&apples=oranges&starwars=life").then((res) => {
-    console.log(res.data);
-  });
+  axios
+    .get(
+      "http://localhost:3000/query-test?banana=fruit&apples=oranges&starwars=life"
+    )
+    .then((res) => {
+      console.log(res.data);
+    });
 }
 
 document.querySelector("#query-button").addEventListener("click", queryRequest);
@@ -222,20 +227,18 @@ document.querySelector("#query-button").addEventListener("click", queryRequest);
 // CODE HERE
 
 function createFood(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const foodInput = document.querySelector('#food-input');
-    let body = {
-        newFood: foodInput.value
-    }
-    axios.post('http://localhost:3000/food', body)
-        .then(function(res) {
-            const newP = document.createElement("p");
-                newP.textContent = body.newFood;
-                document.querySelector('body').appendChild(newP);
-        })
-        foodInput.value = '';
-        console.log(foodInput.value);
+  const foodInput = document.querySelector("#food-input");
+  let body = {
+    newFood: foodInput.value,
+  };
+  axios.post("http://localhost:3000/food", body).then(function (res) {
+    const newP = document.createElement("p");
+    newP.textContent = body.newFood;
+    document.querySelector("body").appendChild(newP);
+  });
+  foodInput.value = "";
+  console.log(foodInput.value);
 }
-document.querySelector('#input-button').addEventListener('click', createFood)
-
+document.querySelector("#input-button").addEventListener("click", createFood);
