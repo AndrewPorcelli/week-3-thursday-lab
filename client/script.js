@@ -221,20 +221,21 @@ document.querySelector("#query-button").addEventListener("click", queryRequest);
 
 // CODE HERE
 
-function createFood () {
-    const foodInput = document.querySelector('input')
+function createFood(event) {
+    event.preventDefault();
 
-    const body = {
-        newFood: foodInput
+    const foodInput = document.querySelector('#food-input');
+    let body = {
+        newFood: foodInput.value
     }
-
-    axios.post('http://localhost:3000/food', body).then((res) => {
-        console.log(res.data);
-    })
-
-    
-    
+    axios.post('http://localhost:3000/food', body)
+        .then(function(res) {
+            const newP = document.createElement("p");
+                newP.textContent = body.newFood;
+                document.querySelector('body').appendChild(newP);
+        })
+        foodInput.value = '';
+        console.log(foodInput.value);
 }
-
-document.querySelector('input').addEventListener('submit', createFood)
+document.querySelector('#input-button').addEventListener('click', createFood)
 
